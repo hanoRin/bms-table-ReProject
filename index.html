@@ -55,7 +55,7 @@
                 var obj = $("#table_int");
 
                 obj.html("");
-                $("<thead class='table-dark'><tr><th>Level</th><th>Title</th><th>Artist</th><th>傾向</th><th>BPM</th></tr></thead><tbody>")
+                $("<thead class='table-dark'><tr><th>Level</th><th>Title</th><th>Artist</th><th>傾向</th><th>BPM</th><th>DL</th></tr></thead><tbody>")
                     .appendTo(obj);
                 var obj_sep = null;
                 for (var i = 0; i < info.length; i++) {
@@ -92,6 +92,15 @@
                     // BPM
                     $("<td width='8%'>" + info[i].BPM + "</td>").appendTo(str);
                     count++;
+
+                    // 差分列の出力
+                    if (info[i].url && info[i].url.trim() !== "") {
+                    // スプレッドシートの url 列にデータがある場合
+                    $("<td width='8%'><a href='" + info[i].url + "' target='_blank'>DL</a></td>").appendTo(str);
+                    } else {
+                    // 空欄の場合
+                    $("<td width='8%'>-</td>").appendTo(str);
+}
 
                 }
                 $("</tbody>").appendTo(obj);
