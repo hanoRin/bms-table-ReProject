@@ -31,6 +31,7 @@
             <p>難易度表の読み込みと表示に数秒かかります。</p>
             <hr>
             <p class="mb-0">自作差分置き場。sl0=0,st0=13</p>
+            <p>?は査定中になります。</p>
         </div>
 
 
@@ -53,61 +54,58 @@
                 var ev = "";
                 var count = 0;
                 var obj = $("#table_int");
-
                 obj.html("");
                 $("<thead class='table-dark'><tr><th>Level</th><th>Title</th><th>Artist</th><th>傾向</th><th>BPM</th><th>URL</th></tr></thead><tbody>")
                     .appendTo(obj);
                 var obj_sep = null;
+            
                 for (var i = 0; i < info.length; i++) {
                     if (x != info[i].level) {
                         if (obj_sep != null) {
-                            obj_sep.html("<td colspan='6'>" + "<b>" + mark + x + " (" + count +
-                                "譜面)</b></td>");
+                            obj_sep.html("<td colspan='6'>" + "<b>" + mark + x + " (" + count + "譜面)</b></td>");
                         }
-                        obj_sep = $("<tr class='table-dark' style='text-align:center' id='" + mark + info[i].level +
-                            "'></tr>");
+                        obj_sep = $("<tr class='table-dark' style='text-align:center' id='" + mark + info[i].level + "'></tr>");
                         obj_sep.appendTo(obj);
                         count = 0;
                         x = info[i].level;
                     }
-
+            
                     var str = $("<tr></tr>");
-
-                    // Level
+            
+                    // 1. Level
                     $("<td width='5%'>" + mark + x + "</td>").appendTo(str);
-
-                    // Title
-                    $("<td width='25％'>" +
-                        "<a href='https://bms-ir.org/new/song?songmd5=" + info[
-                            i]
-                        .md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
-
-                    // Artist
+            
+                    // 2. Title
+                    $("<td width='25%'>" + "<a href='https://bms-ir.org/new/song?songmd5=" + info[i].md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
+            
+                    // 3. Artist
                     $("<td width='35%'>" + info[i].artist + "</td>").appendTo(str);
-
-                    // 傾向
-                    $("<td width='9%'>" + info[i].傾向 + "</td>").appendTo(str);
-                    str.appendTo(obj);
-                    
-                    // BPM
+            
+                    // 4. 傾向
+                    $("<td width='9%'>" + (info[i].傾向 || "") + "</td>").appendTo(str);
+            
+                    // 5. BPM
                     $("<td width='8%'>" + info[i].BPM + "</td>").appendTo(str);
-                    count++;
-
-                    // 差分列の出力
+            
+                    // 6. 差分列（URL）の出力
                     if (info[i].url && info[i].url.trim() !== "") {
-                    // スプレッドシートの url 列にデータがある場合
-                    $("<td width='8%'><a href='" + info[i].url + "' target='_blank'>DL</a></td>").appendTo(str);
+                        // スプレッドシート/JSON の url 列にデータがある場合
+                        $("<td width='8%'><a href='" + info[i].url + "' target='_blank'>DL</a></td>").appendTo(str);
                     } else {
-                    // 空欄の場合
-                    $("<td width='8%'>-</td>").appendTo(str);
-}
-
+                        // 空欄の場合
+                        $("<td width='8%'>-</td>").appendTo(str);
+                    }
+            
+                    // すべての <td> を追加し終わってから <tr> を table に追加する
+                    str.appendTo(obj);
+                    count++;
                 }
+            
                 $("</tbody>").appendTo(obj);
-
+            
                 if (obj_sep != null) {
-                    obj_sep.html("<td class='table-dark' style='text-align:center' colspan='5'>" + "<b>" + mark + x +
-                        " (" + count + "譜面)</b></td>");
+                    // 全6列に合わせて colspan='6' に修正
+                    obj_sep.html("<td class='table-dark' style='text-align:center' colspan='6'>" + "<b>" + mark + x + " (" + count + "譜面)</b></td>");
                 }
             }
         </script>
