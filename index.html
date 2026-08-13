@@ -55,7 +55,7 @@
                 var obj = $("#table_int");
 
                 obj.html("");
-                $("<thead class='table-dark'><tr><th>Level</th><th>Title</th><th>Artist</th><th>傾向</th><th>BPM</th><th>DL</th></tr></thead><tbody>")
+                $("<thead class='table-dark'><tr><th>Level</th><th>Title</th><th>Artist</th><th>傾向</th><th>BPM</th><th>URL</th></tr></thead><tbody>")
                     .appendTo(obj);
                 var obj_sep = null;
                 for (var i = 0; i < info.length; i++) {
@@ -77,13 +77,13 @@
                     $("<td width='5%'>" + mark + x + "</td>").appendTo(str);
 
                     // Title
-                    $("<td width='30%'>" +
+                    $("<td width='25％'>" +
                         "<a href='https://bms-ir.org/new/song?songmd5=" + info[
                             i]
                         .md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
 
                     // Artist
-                    $("<td width='40%'>" + info[i].artist + "</td>").appendTo(str);
+                    $("<td width='30%'>" + info[i].artist + "</td>").appendTo(str);
 
                     // 傾向
                     $("<td width='9%'>" + info[i].傾向 + "</td>").appendTo(str);
